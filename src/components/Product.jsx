@@ -1,12 +1,10 @@
+import PropTypes from 'prop-types';
+
 const Product = ({
   name,
-  imgUrl = "https://dummyimage.com/640x480/2a2a2a/ffffff&text=Product+image+placeholder",
+  imgUrl = 'https://dummyimage.com/640x480/2a2a2a/ffffff&text=Product+image+placeholder',
   price,
 }) => {
-  // const price = 999;
-  // const imgUrl =
-  //   "https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg?dpr=2&h=480&w=640";
-
   return (
     <>
       <h2>{name}</h2>
@@ -14,6 +12,12 @@ const Product = ({
       <p>Price: {price} credits</p>
     </>
   );
+};
+
+Product.propTypes = {
+  name: PropTypes.string.isRequired,
+  imgUrl: PropTypes.string,
+  price: PropTypes.number.isRequired,
 };
 
 export default Product;

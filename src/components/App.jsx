@@ -1,10 +1,8 @@
 // import { useState } from "react";
 // import reactLogo from "./assets/react.svg";
 // import viteLogo from "/vite.svg";
-import "./App.css";
-import Product from "./Product";
-import Mailbox from "./Mailbox";
-import RenderBooks from "./BookList";
+import './App.css';
+import Product from './Product';
 
 export default function App() {
   return (
@@ -21,8 +19,6 @@ export default function App() {
         price={14.29}
       />
       <Product name="Test Tacos" price={0.99} />
-      <Mailbox username="Polly" messages={["Hello", 1, 2, "Task"]} />
-      <RenderBooks />
     </div>
   );
 }
