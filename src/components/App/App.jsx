@@ -2,12 +2,13 @@ import { useState } from 'react';
 // import reactLogo from "./assets/react.svg";
 // import viteLogo from "/vite.svg";
 import './App.css';
-import Product from './Product';
-import { ClickCounter } from './ClickCounter';
-import AppBook from './AppBook';
-import { TwoClickCounter } from './TwoClickCounter';
+import Product from '../Product/Product';
+import { ClickCounter } from '../ClickCounter';
+import { TwoClickCounter } from '../TwoClickCounter';
+import { BookList } from '../BookList/BookList';
+import favoriteBooks from '../../data/favouriteBooks.json';
 
-export default function App() {
+export function App() {
   // let clicks = 0;
   const [clicks, setClicks] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
@@ -39,7 +40,7 @@ export default function App() {
       />
       <Product name="Test Tacos" price={0.99} />
 
-      <AppBook />
+      <BookList books={favoriteBooks} />
 
       <ClickCounter />
       <ClickCounter />
