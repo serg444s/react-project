@@ -3,11 +3,13 @@ import { useState } from 'react';
 // import viteLogo from "/vite.svg";
 import './App.css';
 import Product from '../Product/Product';
+import { LoginForm } from '../LoginForm/LoginForm';
 import { ClickCounter } from '../ClickCounter';
 import { TwoClickCounter } from '../TwoClickCounter';
 import { BookList } from '../BookList/BookList';
 import favoriteBooks from '../../data/favouriteBooks.json';
 import { ButtonCurrentClick } from '../ButtonCurrentClick/ButtonCurrentClick';
+import { SearchBar } from '../SearchBar/SearchBar';
 
 export function App() {
   // let clicks = 0;
@@ -20,6 +22,11 @@ export function App() {
   const handleTwoClicks = () => {
     // clicks = clicks + 1;
     setTwoClicks(twoClicks + 1);
+  };
+
+  const handleLogin = userData => {
+    // Виконуємо необхідні операції з даними
+    console.log(userData);
   };
 
   return (
@@ -49,6 +56,12 @@ export function App() {
         <TwoClickCounter value={twoClicks} onUpdate={handleTwoClicks} />
         <TwoClickCounter value={twoClicks} onUpdate={handleTwoClicks} />
       </div>
+
+      <h1>Please login to your account!</h1>
+      {/* Передаємо колбек як пропс форми */}
+      <LoginForm onLogin={handleLogin} />
+
+      <SearchBar />
     </div>
   );
 }

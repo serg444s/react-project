@@ -1,0 +1,9 @@
+.container {
+  margin-top: 40px;
+}
+
+.input {
+  border: 1px solid black;
+  padding: 12px;
+  font-size: 14px;
+}
