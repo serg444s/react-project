@@ -10,6 +10,7 @@ import { BookList } from '../BookList/BookList';
 import favoriteBooks from '../../data/favouriteBooks.json';
 import { ButtonCurrentClick } from '../ButtonCurrentClick/ButtonCurrentClick';
 import { SearchBar } from '../SearchBar/SearchBar';
+import CheckBox from '../CheckBox/CheckBox';
 
 export function App() {
   // let clicks = 0;
@@ -27,6 +28,12 @@ export function App() {
   const handleLogin = userData => {
     // Виконуємо необхідні операції з даними
     console.log(userData);
+  };
+
+  const [hasAccepted, setHasAccepted] = useState(false);
+
+  const handleChange = evt => {
+    setHasAccepted(evt.target.checked);
   };
 
   return (
@@ -62,6 +69,7 @@ export function App() {
       <LoginForm onLogin={handleLogin} />
 
       <SearchBar />
+      <CheckBox hasAccepted={hasAccepted} handleChange={handleChange} />
     </div>
   );
 }
