@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 // import reactLogo from "./assets/react.svg";
 // import viteLogo from "/vite.svg";
 import './App.css';
@@ -11,15 +11,22 @@ import favoriteBooks from '../../data/favouriteBooks.json';
 import { ButtonCurrentClick } from '../ButtonCurrentClick/ButtonCurrentClick';
 import { SearchBar } from '../SearchBar/SearchBar';
 import CheckBox from '../CheckBox/CheckBox';
+import { Articles } from '../Articles/Articles';
+import axios from 'axios';
 
 export function App() {
   // let clicks = 0;
   const [isOpen, setIsOpen] = useState(false);
+  const [twoClicks, setTwoClicks] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [hasAccepted, setHasAccepted] = useState(false);
+  const [articles, setArticles] = useState([]);
+  const [error, setError] = useState(false);
+
   const handleToggle = () => {
     setIsOpen(!isOpen);
   };
 
-  const [twoClicks, setTwoClicks] = useState(0);
   const handleTwoClicks = () => {
     // clicks = clicks + 1;
     setTwoClicks(twoClicks + 1);
@@ -30,11 +37,26 @@ export function App() {
     console.log(userData);
   };
 
-  const [hasAccepted, setHasAccepted] = useState(false);
-
   const handleChange = evt => {
     setHasAccepted(evt.target.checked);
   };
+
+  useEffect(() => {
+    async function fetchArticles() {
+      try {
+        setLoading(true);
+        const response = await axios.get(
+          'https://hn.algolia.com/api/v1/search?query=react'
+        );
+        setArticles(response.data.hits);
+      } catch (error) {
+        setError(true);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchArticles();
+  }, []);
 
   return (
     <div>
@@ -70,6 +92,13 @@ export function App() {
 
       <SearchBar />
       <CheckBox hasAccepted={hasAccepted} handleChange={handleChange} />
+      {loading && <p style={{ fontSize: 20 }}>Loading data, please wait...</p>}
+      {error && (
+        <p style={{ fontSize: 20 }}>
+          Whoops, something went wrong! Please try reloading this page!
+        </p>
+      )}
+      {articles.length > 0 && <Articles items={articles} />}
     </div>
   );
 }
