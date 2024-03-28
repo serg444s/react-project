@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 // import reactLogo from "./assets/react.svg";
 // import viteLogo from "/vite.svg";
 import './App.css';
@@ -12,7 +12,9 @@ import { ButtonCurrentClick } from '../ButtonCurrentClick/ButtonCurrentClick';
 import { SearchBar } from '../SearchBar/SearchBar';
 import CheckBox from '../CheckBox/CheckBox';
 import { Articles } from '../Articles/Articles';
-import axios from 'axios';
+import { Hourglass } from 'react-loader-spinner';
+import { fetchArticlesWithTopic } from '../Articles/articles-api';
+import { SearchForm } from '../SearchForm/SearchForm';
 
 export function App() {
   // let clicks = 0;
@@ -41,14 +43,14 @@ export function App() {
     setHasAccepted(evt.target.checked);
   };
 
-  useEffect(() => {
+  const handleSearch = async topic => {
     async function fetchArticles() {
       try {
+        setArticles([]);
+        setError(false);
         setLoading(true);
-        const response = await axios.get(
-          'https://hn.algolia.com/api/v1/search?query=react'
-        );
-        setArticles(response.data.hits);
+        const data = await fetchArticlesWithTopic(topic);
+        setArticles(data);
       } catch (error) {
         setError(true);
       } finally {
@@ -56,7 +58,7 @@ export function App() {
       }
     }
     fetchArticles();
-  }, []);
+  };
 
   return (
     <div>
@@ -92,7 +94,18 @@ export function App() {
 
       <SearchBar />
       <CheckBox hasAccepted={hasAccepted} handleChange={handleChange} />
-      {loading && <p style={{ fontSize: 20 }}>Loading data, please wait...</p>}
+      <SearchForm onSearch={handleSearch} />
+      {loading && (
+        <Hourglass
+          visible={true}
+          height="80"
+          width="80"
+          ariaLabel="hourglass-loading"
+          wrapperStyle={{}}
+          wrapperClass=""
+          colors={['#306cce', '#72a1ed']}
+        />
+      )}
       {error && (
         <p style={{ fontSize: 20 }}>
           Whoops, something went wrong! Please try reloading this page!
