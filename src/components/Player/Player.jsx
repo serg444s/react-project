@@ -2,9 +2,7 @@ import { useRef } from 'react';
 
 export const Player = ({ source }) => {
   const playerRef = useRef();
-
   const play = () => playerRef.current.play();
-
   const pause = () => playerRef.current.pause();
 
   return (

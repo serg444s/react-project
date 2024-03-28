@@ -1,4 +1,4 @@
-import { useState, forwardRef, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 // import reactLogo from "./assets/react.svg";
 // import viteLogo from "/vite.svg";
 import './App.css';
@@ -16,6 +16,7 @@ import { Hourglass } from 'react-loader-spinner';
 import { fetchArticlesWithTopic } from '../Articles/articles-api';
 import { SearchForm } from '../SearchForm/SearchForm';
 import { Player } from '../Player/Player';
+import CustomButton from '../CustomButton';
 
 export function App() {
   // let clicks = 0;
@@ -60,9 +61,7 @@ export function App() {
     }
     fetchArticles();
   };
-  const CustomButton = forwardRef((props, ref) => (
-    <button ref={ref}>{props.children}</button>
-  ));
+
   const btnRef = useRef();
   useEffect(() => btnRef.current.focus(), []);
 
@@ -113,8 +112,8 @@ export function App() {
         </p>
       )}
       {articles.length > 0 && <Articles items={articles} />}
-      <Player source="http://media.w3.org/2010/05/sintel/trailer.mp4" />;
-      <CustomButton ref={btnRef}>Button with forwarded ref</CustomButton>;
+      <Player source="http://media.w3.org/2010/05/sintel/trailer.mp4" />
+      <CustomButton ref={btnRef}>Button with forwarded ref</CustomButton>
     </div>
   );
 }
