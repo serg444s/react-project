@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, forwardRef, useEffect, useRef } from 'react';
 // import reactLogo from "./assets/react.svg";
 // import viteLogo from "/vite.svg";
 import './App.css';
@@ -15,6 +15,7 @@ import { Articles } from '../Articles/Articles';
 import { Hourglass } from 'react-loader-spinner';
 import { fetchArticlesWithTopic } from '../Articles/articles-api';
 import { SearchForm } from '../SearchForm/SearchForm';
+import { Player } from '../Player/Player';
 
 export function App() {
   // let clicks = 0;
@@ -59,6 +60,11 @@ export function App() {
     }
     fetchArticles();
   };
+  const CustomButton = forwardRef((props, ref) => (
+    <button ref={ref}>{props.children}</button>
+  ));
+  const btnRef = useRef();
+  useEffect(() => btnRef.current.focus(), []);
 
   return (
     <div>
@@ -77,21 +83,16 @@ export function App() {
         price={14.29}
       />
       <Product name="Test Tacos" price={0.99} />
-
       <BookList books={favoriteBooks} />
-
       <ClickCounter />
       <ClickCounter />
-
       <div>
         <TwoClickCounter value={twoClicks} onUpdate={handleTwoClicks} />
         <TwoClickCounter value={twoClicks} onUpdate={handleTwoClicks} />
       </div>
-
       <h1>Please login to your account!</h1>
       {/* Передаємо колбек як пропс форми */}
       <LoginForm onLogin={handleLogin} />
-
       <SearchBar />
       <CheckBox hasAccepted={hasAccepted} handleChange={handleChange} />
       <SearchForm onSearch={handleSearch} />
@@ -112,6 +113,8 @@ export function App() {
         </p>
       )}
       {articles.length > 0 && <Articles items={articles} />}
+      <Player source="http://media.w3.org/2010/05/sintel/trailer.mp4" />;
+      <CustomButton ref={btnRef}>Button with forwarded ref</CustomButton>;
     </div>
   );
 }
