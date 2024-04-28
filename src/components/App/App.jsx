@@ -17,6 +17,7 @@ import { fetchArticlesWithTopic } from '../Articles/articles-api';
 import { SearchForm } from '../SearchForm/SearchForm';
 import { Player } from '../Player/Player';
 import CustomButton from '../CustomButton';
+import BurgerModal from '../BurgerModal/BurgerModal';
 
 export function App() {
   // let clicks = 0;
@@ -67,6 +68,7 @@ export function App() {
 
   return (
     <div>
+      <BurgerModal />
       <ButtonCurrentClick />
       <button onClick={handleToggle}>{isOpen ? 'Hide' : 'Show'}</button>
       <p>{isOpen && 'Now you can see me!'}</p>
